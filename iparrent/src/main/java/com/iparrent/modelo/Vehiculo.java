@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 
@@ -21,7 +22,7 @@ public abstract class Vehiculo {
 	@NotBlank(message = "La matrículo es obligatoria")
 	private String modelo;
 
-	@NotBlank(message = "La matrículo es obligatoria")
+	@NotNull(message = "El precio por día es obligatorio")
 	@Positive(message = "El precio por día debe ser mayor que cero")
 	private BigDecimal precioDia;
 
