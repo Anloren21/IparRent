@@ -2,13 +2,32 @@ package com.iparrent.excepciones;
 
 public class AlquilerException extends RuntimeException {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public AlquilerException(String mensaje) {
-        super(mensaje);
-    }
+	public enum Tipo {
 
-    public AlquilerException(String mensaje, Throwable causa) {
-        super(mensaje, causa);
-    }
+		SOLICITUD_INVALIDA,
+
+		RECURSO_NO_ENCONTRADO,
+
+		VEHICULO_NO_DISPONIBLE
+	}
+
+	private final Tipo tipo;
+
+	public AlquilerException(Tipo tipo, String mensaje) {
+
+		super(mensaje);
+
+		this.tipo = tipo;
+	}
+
+	public AlquilerException(String mensaje) {
+
+		this(Tipo.SOLICITUD_INVALIDA, mensaje);
+	}
+
+	public Tipo getTipo() {
+		return tipo;
+	}
 }

@@ -11,6 +11,7 @@ import com.iparrent.accesodatos.DaoAlquiler;
 import com.iparrent.accesodatos.DaoCliente;
 import com.iparrent.accesodatos.DaoVehiculo;
 import com.iparrent.excepciones.AlquilerException;
+import com.iparrent.excepciones.AlquilerException.Tipo;
 import com.iparrent.modelo.Alquiler;
 import com.iparrent.modelo.Cliente;
 import com.iparrent.modelo.Vehiculo;
@@ -42,21 +43,22 @@ public class AlquilerNegocioImpl implements AlquilerNegocio {
 	public Alquiler alquilar(Long idCliente, Long idVehiculo, int dias) {
 
 		if (idCliente == null) {
-			throw new AlquilerException("El id del cliente es obligatorio");
+			throw new AlquilerException(Tipo.SOLICITUD_INVALIDA, "El id del cliente es obligatorio");
 		}
 
 		if (idVehiculo == null) {
-			throw new AlquilerException("El id del vehículo es obligatorio");
+			throw new AlquilerException(Tipo.SOLICITUD_INVALIDA, "El id del vehículo es obligatorio");
 		}
 
-		Cliente cliente = daoCliente.obtenerPorId(idCliente)
-				.orElseThrow(() -> new AlquilerException("No existe el cliente con id " + idCliente));
+		Cliente cliente = daoCliente.obtenerPorId(idCliente).orElseThrow(
+				() -> new AlquilerException(Tipo.RECURSO_NO_ENCONTRADO, "No existe el cliente con id " + idCliente));
 
-		Vehiculo vehiculo = daoVehiculo.obtenerPorId(idVehiculo)
-				.orElseThrow(() -> new AlquilerException("No existe el vehículo con id " + idVehiculo));
+		Vehiculo vehiculo = daoVehiculo.obtenerPorId(idVehiculo).orElseThrow(
+				() -> new AlquilerException(Tipo.RECURSO_NO_ENCONTRADO, "No existe el vehículo con id " + idVehiculo));
 
 		if (!vehiculo.isDisponible()) {
-			throw new AlquilerException("El vehículo con id " + idVehiculo + " no está disponible");
+			throw new AlquilerException(Tipo.VEHICULO_NO_DISPONIBLE,
+					"El vehículo con id " + idVehiculo + " no está disponible");
 		}
 
 		Alquiler alquiler = new Alquiler(null, cliente, vehiculo, LocalDate.now(), dias);
@@ -80,11 +82,11 @@ public class AlquilerNegocioImpl implements AlquilerNegocio {
 	public void devolver(Long idAlquiler) {
 
 		if (idAlquiler == null) {
-			throw new AlquilerException("El id del alquiler es obligatorio");
+			throw new AlquilerException(Tipo.SOLICITUD_INVALIDA, "El id del alquiler es obligatorio");
 		}
 
-		Alquiler alquiler = daoAlquiler.obtenerPorId(idAlquiler)
-				.orElseThrow(() -> new AlquilerException("No existe el alquiler con id " + idAlquiler));
+		Alquiler alquiler = daoAlquiler.obtenerPorId(idAlquiler).orElseThrow(
+				() -> new AlquilerException(Tipo.RECURSO_NO_ENCONTRADO, "No existe el alquiler con id " + idAlquiler));
 
 		Vehiculo vehiculo = alquiler.getVehiculo();
 
