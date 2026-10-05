@@ -22,7 +22,7 @@ public class JacksonConfig
 
         mapper.disable(
                 SerializationFeature
-                    .WRITE_DATES_AS_TIMESTAMPS);
+                        .WRITE_DATES_AS_TIMESTAMPS);
     }
 
     @Override
