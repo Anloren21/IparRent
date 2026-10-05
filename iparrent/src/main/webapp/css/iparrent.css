@@ -1,0 +1,36 @@
+:root {
+	--iparrent-primary: #2563eb;
+	--iparrent-dark: #111827;
+	--iparrent-light: #f8fafc;
+}
+
+body {
+	background: #fff;
+}
+
+.navbar-brand img {
+	object-fit: contain;
+}
+
+.hero-iparrent {
+	min-height: 70vh;
+	background:
+		radial-gradient(circle at 80% 25%, rgba(37, 99, 235, .15), transparent 35%),
+		linear-gradient(180deg, #fff 0%, #f4f7ff 100%);
+}
+
+.min-vh-75 {
+	min-height: 75vh;
+}
+
+.card {
+	border-radius: 1rem;
+}
+
+.btn {
+	border-radius: .65rem;
+}
+
+footer {
+	border-top: 1px solid rgba(255, 255, 255, .08);
+}
